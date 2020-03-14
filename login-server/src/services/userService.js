@@ -12,3 +12,30 @@ export const register = user => {
     });
   });
 };
+
+export const login = user => {
+  return new Promise((resolve, reject) => {
+    User.findOne(
+      {
+        email: user.email
+      },
+      (err, userData) => {
+        if (err) {
+          return reject(err);
+        }
+        if (!userData) {
+          return reject("No user!");
+        }
+        userData.comparePassword(user.password, (err, isMatch) => {
+          if (!isMatch) {
+            return reject("Wrong password!!!");
+          }
+          userData.generateToken((err, user) => {
+            if (err) return reject(err);
+            return resolve(user);
+          });
+        });
+      }
+    );
+  });
+};

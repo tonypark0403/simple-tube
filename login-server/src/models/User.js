@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import config from "../config/index.js";
 const saltRounds = 10; // make a salt having 10 length.
 
 const userSchema = mongoose.Schema({
@@ -47,6 +49,22 @@ userSchema.pre("save", function(next) {
     next();
   }
 });
+
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+  bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
+
+userSchema.methods.generateToken = function(cb) {
+  const user = this;
+  user.token = jwt.sign(user._id.toHexString(), config.secretToken);
+  user.save((err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
 
 const User = mongoose.model("User", userSchema);
 
