@@ -1,4 +1,5 @@
 import * as userService from "../services/userService.js";
+import User from "../models/User.js";
 
 export const register = (req, res) => {
   userService
@@ -29,5 +30,34 @@ export const login = (req, res) => {
         .cookie("x_auth", null)
         .status(400)
         .json({ loginSuccess: false, message });
+    });
+};
+
+export const afterAuth = (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  });
+};
+
+export const logout = (req, res) => {
+  userService
+    .logout(req.user)
+    .then(user => {
+      res.status(200).json({
+        success: true
+      });
+    })
+    .catch(err => {
+      res.json({
+        success: false,
+        err
+      });
     });
 };

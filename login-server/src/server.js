@@ -8,6 +8,7 @@ dotenv.config();
 
 import * as userController from "./controllers/userController.js";
 import config from "./config/index.js";
+import auth from "./middlewares/auth.js";
 
 const app = express();
 
@@ -35,4 +36,7 @@ app.post("/register", userController.register);
 
 app.post("/login", userController.login);
 
+app.get("/auth", auth, userController.afterAuth);
+
+app.get("/logout", auth, userController.logout);
 app.listen(port, () => console.log(`Web app listening on port ${port}`));

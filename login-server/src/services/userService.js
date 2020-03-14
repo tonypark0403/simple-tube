@@ -39,3 +39,12 @@ export const login = user => {
     );
   });
 };
+
+export const logout = user => {
+  return new Promise((resolve, reject) => {
+    User.findOneAndUpdate({ _id: user._id }, { token: "" }, (err, user) => {
+      if (err) return reject(err);
+      return resolve(user);
+    });
+  });
+};
