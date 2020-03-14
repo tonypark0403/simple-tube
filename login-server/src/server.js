@@ -1,16 +1,33 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+
+import dotenv from "dotenv";
 dotenv.config();
 
+import * as userController from "./controllers/userController.js";
+import config from "./config/index.js";
+
 const app = express();
+
+//appliation/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+//application/json
+app.use(bodyParser.json());
+
 const port = process.env.PORT;
+mongoose
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  .then(() => console.log("MongoDB connected..."))
+  .catch(err => console.log(err));
 
-mongoose.connect(process.env.MONGOURL, {
-    useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
-}).then(() => console.log('MongoDB connected...'))
-    .catch(err => console.log(err));
+app.get("/", (req, res) => res.send("Hello world!"));
 
-app.get('/', (req, res) => res.send('Hello world!'));
+app.post("/register", userController.register);
 
 app.listen(port, () => console.log(`Web app listening on port ${port}`));
