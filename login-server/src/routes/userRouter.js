@@ -4,7 +4,7 @@ import auth from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => res.send("Hello world!"));
+router.get("/hello", (req, res) => res.send("Hello world!"));
 
 router.post("/register", userController.register);
 
