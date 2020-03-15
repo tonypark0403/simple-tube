@@ -6,9 +6,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 
-import * as userController from "./controllers/userController.js";
 import config from "./config/index.js";
-import auth from "./middlewares/auth.js";
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
 
@@ -30,13 +29,6 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => res.send("Hello world!"));
+app.use("/api/user", userRouter);
 
-app.post("/register", userController.register);
-
-app.post("/login", userController.login);
-
-app.get("/auth", auth, userController.afterAuth);
-
-app.get("/logout", auth, userController.logout);
 app.listen(port, () => console.log(`Web app listening on port ${port}`));
