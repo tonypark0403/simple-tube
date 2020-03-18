@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import Axios from "axios";
+import axios from "axios";
 function LandingPage() {
   useEffect(() => {
-    Axios.get("/api/user/hello").then(res => console.log(res));
+    axios.get("/api/user/hello").then(res => console.log(res));
   }, []);
   return (
     <div style={{

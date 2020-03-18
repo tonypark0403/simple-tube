@@ -7,7 +7,8 @@
     "start": "node --experimental-modules src/server.js",
     "backend": "nodemon --experimental-modules src/server.js",
     "dev": "concurrently \"nodemon --experimental-modules src/server.js\" \"npm run start --prefix ../client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,9 @@
     "mongoose": "^5.9.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   }
 }
