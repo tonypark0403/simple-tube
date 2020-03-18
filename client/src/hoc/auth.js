@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../_actions/user_action';
 
-export default function (wrappedComponent, option, adminRoute = null) {
+export default function (WrappedComponent, option, adminRoute = null) {
 
     //null    =>  public
     //true    =>  private
@@ -14,12 +14,12 @@ export default function (wrappedComponent, option, adminRoute = null) {
 
             dispatch(auth()).then(res => {
                 console.log(res)
-                if (!response.payload.isAuth) {
+                if (!res.payload.isAuth) {
                     if (option) {
                         props.history.push('/login')
                     }
                 } else {
-                    if (adminRoute && !response.payload.isAdmin) {
+                    if (adminRoute && !res.payload.isAdmin) {
                         props.history.push('/')
                     } else {
                         if (option === false)
@@ -30,7 +30,7 @@ export default function (wrappedComponent, option, adminRoute = null) {
         }, [])
 
         return (
-            <wrappedComponent />
+            <WrappedComponent />
         )
     }
     return AuthenticationCheck
