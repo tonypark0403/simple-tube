@@ -100,7 +100,7 @@ function RegisterPage(props) {
           handleReset,
         } = props;
         return (
-          <Layout className="layout">
+          <Layout className="layout" style={{ height: '80vh' }}>
             <div style={{
               width: '80vw', margin: '0 auto'
             }}>
