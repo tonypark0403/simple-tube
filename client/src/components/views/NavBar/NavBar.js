@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import LeftMenu from './Sections/LeftMenu';
-import RightMenu from './Sections/RightMenu';
-import { Drawer, Button, Icon } from 'antd';
+import LeftMenu from './sections/LeftMenu';
+import RightMenu from './sections/RightMenu';
+import { Drawer, Button } from 'antd';
+import { RightOutlined } from '@ant-design/icons';
 import './sections/Navbar.css';
 
 function NavBar() {
@@ -32,7 +33,7 @@ function NavBar() {
           type="primary"
           onClick={showDrawer}
         >
-          <Icon type="align-right" />
+          <RightOutlined />
         </Button>
         <Drawer
           title="Basic Drawer"
